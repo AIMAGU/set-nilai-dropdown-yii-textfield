@@ -1,0 +1,25 @@
+<?php
+  Yii::app()->clientScript->registerScript("combo-change", "
+		$(document).ready(function(){
+			$('#nisn').change(function(){
+			sel = $(this);
+			console.log(sel.val());
+				if(sel.val() != '' ){
+					$('#Presensi_nisn').val(sel.val());
+					$('#Presensi_nisn').attr('disabled', 'disabled');
+				}
+			});
+		});
+	");
+	?>
+	
+	<?php $SiswaArray = CHtml::listData(Siswa::model()->findAll(array(
+		'order'=>'nama_lengkap ASC',
+		//'group' => 'kelas',
+		'distinct' => true
+		)), 'nisn', 'nama_lengkap'); 
+	?>
+	
+	<?php echo $form->dropDownList($model, 'nisn', $SiswaArray, array('class'=>'span3', 'empty' => '-- Pilih Siswa --', 'id' => 'nisn')); ?>
+	
+	<?php echo $form->textField($model,'nisn', array('class'=>'span2', 'id' => 'Presensi_nisn', 'placeholder'=>'NISN')); ?>
