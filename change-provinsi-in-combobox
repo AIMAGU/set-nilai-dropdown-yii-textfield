@@ -1,0 +1,52 @@
+<html>
+<head>
+<link rel="stylesheet" href="main.css" type="text/css" />
+
+<script type="text/javascript" src="jquery-1.4.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#loader").hide();
+  $("#propinsi").change(function(){
+		$("#loader").fadeIn(500);
+		$("#kota").fadeOut();
+    var propinsi = $("#propinsi").val();
+    $.ajax({
+        url: "proses_kota.php",
+        data: "propinsi=" + propinsi,
+        success: function(data){
+            // jika data sukses diambil dari server, tampilkan di <select id=kota>
+            $("#kota").html(data);
+		        $("#loader").fadeOut(500);
+		        $("#kota").fadeIn(1000);
+        }
+    });
+  });
+});
+</script>
+</head>
+<body>
+  <div id="loader"><img src="load.gif"></div><br />
+  <div class="demo" style="width: 250px;">
+  <div><label>Propinsi </label>: 
+  <select name="propinsi" id="propinsi">
+    <option>--Pilih Propinsi--</option>
+    <?php
+      mysql_connect("localhost","root","");
+      mysql_select_db("dbajax");
+
+      // tampilkan nama-nama propinsi yang ada di database
+      $sql = mysql_query("SELECT * FROM propinsi ORDER BY nama_propinsi");
+      while($p=mysql_fetch_array($sql)){
+         echo "<option value=$p[id_propinsi]>$p[nama_propinsi]</option> \n";
+      }
+     ?>
+   </select></div><br />
+   
+   <div><label>Kota </label>:
+   <select name="kota" id="kota">
+     <option>--Pilih Kota--</option>
+   </select>
+   </div><br />
+   </div>
+</body>
+</html>
