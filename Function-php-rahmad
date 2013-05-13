@@ -72,7 +72,7 @@ case 'K' : {$fakultas = 'Kedokteran';
 $fakultas=strtoupper($fakultas);
 ?>
 <?php if($user=='user'){
-echo "Login Sukses!<br>";
+echo "<hr>";
 }else{
  ?>
 <form method='post' action='index.php?to=tugas3'>
