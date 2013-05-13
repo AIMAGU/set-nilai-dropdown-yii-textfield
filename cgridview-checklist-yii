@@ -1,0 +1,28 @@
+<?php $this->widget('bootstrap.widgets.TbGridView',array(
+  'id'=>'penempatan-grid',
+	'type'=>'striped bordered condensed',
+	'dataProvider'=>$model->search(),
+		'template'=>'{items}{summary}{pager}',
+	//'filter'=>$model,
+	'selectableRows'=>2,
+    'columns'=>array(
+         array(
+             'class'=>'CCheckBoxColumn',   
+               'id'=>'naik',
+        ),
+		array(
+                'header' => 'No',
+                'value' => '$row+1',
+            ),
+        'nis0.nama_lengkap',
+		'kelas',
+		'lokal',
+		'th_ajar',
+        array(
+            //'class'=>'CButtonColumn',
+            'header'=>'Lihat',
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template' => '{view}',
+        ),
+    ),
+)); ?>
