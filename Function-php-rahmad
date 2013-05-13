@@ -1,0 +1,127 @@
+<?php
+error_reporting(0);
+$nim=$_POST['nim'];
+$nama=$_POST['nama'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+$selesai=$_POST['selesai'];
+$tanggal=$_POST['tanggal'];
+$bulan=$_POST['bulan'];
+$tahun=$_POST['tahun'];
+?>
+<?php
+$fak=substr($nim,0,1);
+$jur=substr($nim,1,2);
+$masuk=substr($nim,3,2);
+$absen=substr($nim,5,3);
+$user=strtolower($username);
+$pass='f5d74fc2a0fe08aec2b7614ace8e24da';
+
+  	$lahir=mktime(0,0,0,$bulan,$tanggal,$tahun);
+		$today=mktime(0,0,0,date("m"),date("d"),date("Y"));
+		$selisih=$today-$lahir;
+		$umur=$selisih/(60*60*24);
+        $umurtahun=floor($umur/365);
+        $hari=$umur-($umurtahun*365);
+		$tahunlahir = $umur / $pertahun;
+		$bulanlahir = $umur % $pertahun / $perbulan;
+		$harilahir = $umur % $pertahun % $perbulan / $perhari ;
+        $umurbulan=floor($hari/30);
+        $umurhari=$hari-($umurbulan*30);
+		$hitung=mktime(0,0,0,05,03,2013);
+			$weton=array("Pon","Wage","Kliwon","Legi","Pahing");
+			if ($hitung>=$lahir){
+			$hari1=$hitung-$lahir;
+			$weton1=$hari1/(60*60*24);
+			$iweton=$wetonhari1 % 5;
+			$iweton1=array_reverse($weton);
+			$wetonmu=$iweton1[$iweton];
+			} else {
+				$hari1=$lahir-$hitung;
+				$wetonhari1=$hari1/(60*60*24);
+				$iweton=$wetonhari1 % 5;
+				$wetonmu=$weton[$iweton-1];
+			};
+			$array_hari=array(1=>"Senin","Seloso","Rebo","Kemis","Jumat","Sebtu","Minggu");
+			$hari=$array_hari[date("N",$lahir)];
+
+switch ($fak) {
+case 'M' : {$fakultas = 'MIPA';
+			switch ($jur) {
+			case 31 : {$jurusan='D3 TI';} break;
+			case 01 : {$jurusan='Matematika';} break;
+			case 05 : {$jurusan='IF';} break;
+			}
+			} break;
+case 'P' : {$fakultas = 'Pertanian';
+			switch ($jur) {
+			case 09 : {$jurusan='Agroteknologi';} break;
+			case 03 : {$jurusan='Ilmu Tanah';} break;
+			case 12 : {$jurusan='Agrobisnis';} break;
+			}
+			} break;
+case 'K' : {$fakultas = 'Kedokteran';
+			switch ($jur) {
+			case 13 : {$jurusan='Pendidikan Dokter';} break;
+			case 17 : {$jurusan='Keperawatan';} break;
+			case 33 : {$jurusan='Kebidanan';} break;
+			}
+			} break;
+}
+
+$fakultas=strtoupper($fakultas);
+?>
+<?php if($user=='user'){
+echo "Login Sukses!<br>";
+}else{
+ ?>
+<form method='post' action='index.php?to=tugas3'>
+<pre>
+NIM		: <input type='text' placeholder='Type something…' name='nim' value='<?php echo"$nim"; ?>' > </input>
+Nama		: <input type='text' placeholder='Type something…' name='nama' value='<?php echo"$nama"; ?>'> </input>
+Username	: <input type='text' placeholder='Type something…' name='username' > </input>
+Password	: <input type='password' name='password' value='<?php echo"$password"; ?>' > </input>
+Tanggal Lahir	: <select name='tanggal'>
+			<?php
+				for ($i=1; $i<=31; $i++){?>
+				<option value='<?php echo "$i"; ?>' <?php if ($tanggal==$i) {echo"selected";} ?>><?php echo"$i"; ?> </option>
+				<?php } ;
+			?>
+		</select><select name='bulan'>
+			<?php
+				$bln=array(1=>"Januari","Pebruari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember");
+				for ($i=1; $i<=12; $i++){?>
+				<option value='<?php echo "$i";?>' <?php if ($bulan==$i) {echo"selected";} ?>><?php echo"$bln[$i]";?> </option>
+				<?php } ;
+			?>
+		</select><select name='tahun'>
+			<?php
+				for ($i=2013; $i>=1970; $i--){?>
+				<option value='<?php echo"$i"; ?>' <?php if ($tahun==$i) {echo"selected";}?>><?php echo"$i"; ?></option>
+				<?php };
+			?>
+		</select></br>
+<input type='hidden' name='selesai' value='ya'>
+<input type='submit' name='submit' value='Submit'>
+</pre>
+</form>
+<?php } ?>
+<?php
+if ($selesai=='ya') {
+	if ($user!='user'){echo"user tidak ada";} else
+			if (md5($password)!==$pass){echo"password salah";} else
+			{ echo"Username dan Password Anda Benar<br/>";
+			echo"<pre>";
+			echo"NIM		: $nim</br>";
+			echo"Fakultas	: $fakultas</br>";
+			echo"Jurusa		: $jurusan</br>";
+			echo"Tahun masuk	: 20$masuk</br>";
+			echo"Nomor absen	: $absen</br>";
+			echo"Tanggal lahir	: $tanggal-$bulan-$tahun</br>";
+			echo"Umur 		: $umurtahun tahun lebih $umurbulan bulan lebih $umurhari hari</br>";
+			echo"Weton		: $hari - $wetonmu</br>";
+			echo"</pre>";
+			 };
+			};
+			
+?>
